@@ -6,7 +6,8 @@ import pifacerelayplus
 pfr = pifacerelayplus.PiFaceRelayPlus(pifacerelayplus.RELAY)
 
 urls = (
-    '/relays', 'relays'
+    '/relays', 'relays',
+    '/relay/([0-7])', 'relay'
 )
 
 app = web.application(urls, globals())
@@ -35,6 +36,32 @@ class relays:
         return 200
 
     def OPTIONS(self):
+        web.header('Access-Control-Allow-Origin', '*')
+        web.header('Access-Control-Allow-Credentials', 'true')
+        web.header('Access-Control-Allow-Headers', 'Content-Type')
+
+        return 200
+
+
+class relay:
+    def GET(self, relay):
+        output = "{ \"id\": \"" + str(relay) + "\", \"state\": \"" + str(pfr.relays[int(relay)].value) + "\" }"
+        web.header('Content-Type','application/json; charset=utf-8')
+        web.header('Access-Control-Allow-Origin','*')
+        web.header('Access-Control-Allow-Credentials', 'true')
+
+        return output
+
+    def POST(self, relay):
+        web.header('Access-Control-Allow-Origin','*')
+        web.header('Access-Control-Allow-Credentials', 'true')
+
+        i = web.input()
+        pfr.relays[int(relay)].value = int(i.value)
+
+        return 200
+
+    def OPTIONS(self, relay):
         web.header('Access-Control-Allow-Origin', '*')
         web.header('Access-Control-Allow-Credentials', 'true')
         web.header('Access-Control-Allow-Headers', 'Content-Type')
