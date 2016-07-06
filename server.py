@@ -1,11 +1,14 @@
 #!/usr/bin/env python
 import web
 import json
+import time
 import pifacerelayplus
 
 pfr = pifacerelayplus.PiFaceRelayPlus(pifacerelayplus.RELAY)
 
 urls = (
+    '/pulses', 'pulses',
+    '/pulse/([0-7])', 'pulse',
     '/relays', 'relays',
     '/relay/([0-7])', 'relay'
 )
@@ -58,6 +61,33 @@ class relay:
 
         i = web.input()
         pfr.relays[int(relay)].value = int(i.value)
+
+        return 200
+
+    def OPTIONS(self, relay):
+        web.header('Access-Control-Allow-Origin', '*')
+        web.header('Access-Control-Allow-Credentials', 'true')
+        web.header('Access-Control-Allow-Headers', 'Content-Type')
+
+        return 200
+
+class pulses:
+    def POST(self, relay):
+        web.header('Access-Control-Allow-Origin','*')
+        web.header('Access-Control-Allow-Credentials', 'true')
+
+       values = json.loads(web.data())
+
+       for item in values:
+            pfr.relays[int(item['id'])].value = 1;
+
+       time.sleep(.1);
+
+       for item in values:
+            pfr.relays[int(item['id'])].value = 0;
+
+
+        pfr.relays[int(item['id'])].value = 0;
 
         return 200
 
