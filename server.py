@@ -88,6 +88,25 @@ class pulses:
 
         return 200
 
+    def OPTIONS(self):
+        web.header('Access-Control-Allow-Origin', '*')
+        web.header('Access-Control-Allow-Credentials', 'true')
+        web.header('Access-Control-Allow-Headers', 'Content-Type')
+
+        return 200
+
+class pulse:
+    def POST(self, relay):
+        web.header('Access-Control-Allow-Origin','*')
+        web.header('Access-Control-Allow-Credentials', 'true')
+
+        i = web.input()
+        pfr.relays[int(relay)].value = 1
+        time.sleep(5);
+        pfr.relays[int(relay)].value = 0
+
+        return 200
+
     def OPTIONS(self, relay):
         web.header('Access-Control-Allow-Origin', '*')
         web.header('Access-Control-Allow-Credentials', 'true')
