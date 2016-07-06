@@ -76,18 +76,15 @@ class pulses:
         web.header('Access-Control-Allow-Origin','*')
         web.header('Access-Control-Allow-Credentials', 'true')
 
-       values = json.loads(web.data())
+        values = json.loads(web.data())
 
-       for item in values:
+        for item in values:
             pfr.relays[int(item['id'])].value = 1;
 
-       time.sleep(.1);
+        time.sleep(.1);
 
-       for item in values:
+        for item in values:
             pfr.relays[int(item['id'])].value = 0;
-
-
-        pfr.relays[int(item['id'])].value = 0;
 
         return 200
 
