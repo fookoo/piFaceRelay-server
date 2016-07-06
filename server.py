@@ -72,7 +72,7 @@ class relay:
         return 200
 
 class pulses:
-    def POST(self, relay):
+    def POST(self):
         web.header('Access-Control-Allow-Origin','*')
         web.header('Access-Control-Allow-Credentials', 'true')
 
@@ -81,7 +81,7 @@ class pulses:
         for item in values:
             pfr.relays[int(item['id'])].value = 1;
 
-        time.sleep(.1);
+        time.sleep(5);
 
         for item in values:
             pfr.relays[int(item['id'])].value = 0;
