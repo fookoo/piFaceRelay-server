@@ -34,7 +34,13 @@ class relays:
         values = json.loads(web.data())
 
         for item in values:
-                pfr.relays[int(item['id'])].value = int(item['state'])
+                if item['type'] == 'switch':
+                    pfr.relays[int(item['id'])].value = int(item['state'])
+                elif item['type'] == 'pulse':
+                    if int(item['state']) == 1:
+                    pfr.relays[int(item['id'])].value = 1
+                    time.sleep(.1);
+                    pfr.relays[int(item['id'])].value = 0
 
         return 200
 
@@ -102,7 +108,7 @@ class pulse:
 
         i = web.input()
         pfr.relays[int(relay)].value = 1
-        time.sleep(5);
+        time.sleep(.1);
         pfr.relays[int(relay)].value = 0
 
         return 200
