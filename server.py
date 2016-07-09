@@ -38,9 +38,9 @@ class relays:
                     pfr.relays[int(item['id'])].value = int(item['state'])
                 elif item['type'] == 'pulse':
                     if int(item['state']) == 1:
-                    pfr.relays[int(item['id'])].value = 1
-                    time.sleep(.1);
-                    pfr.relays[int(item['id'])].value = 0
+                        pfr.relays[int(item['id'])].value = 1
+                        time.sleep(.1);
+                        pfr.relays[int(item['id'])].value = 0
 
         return 200
 
