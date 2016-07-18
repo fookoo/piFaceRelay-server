@@ -1,3 +1,10 @@
+import web
+import json
+import time
+import pifacerelayplus
+
+pfr = pifacerelayplus.PiFaceRelayPlus(pifacerelayplus.RELAY)
+
 class relays:
     def GET(self):
         web.header('Content-Type','application/json; charset=utf-8')

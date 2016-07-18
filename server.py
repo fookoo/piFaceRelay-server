@@ -1,14 +1,10 @@
 #!/usr/bin/env python
 import web
-import json
-import time
-import pifacerelayplus
 
 from pulses import pulses
 from relays import relays
 from sensors import sensors
 
-pfr = pifacerelayplus.PiFaceRelayPlus(pifacerelayplus.RELAY)
 
 urls = (
     '/pulses', 'pulses',

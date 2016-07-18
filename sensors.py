@@ -1,4 +1,10 @@
 import os
+import web
+import json
+import time
+import pifacerelayplus
+
+pfr = pifacerelayplus.PiFaceRelayPlus(pifacerelayplus.RELAY)
 
 class sensors:
     def GET(self):

@@ -1,3 +1,10 @@
+import web
+import json
+import time
+import pifacerelayplus
+
+pfr = pifacerelayplus.PiFaceRelayPlus(pifacerelayplus.RELAY)
+
 class pulses:
     def POST(self):
         web.header('Access-Control-Allow-Origin','*')
