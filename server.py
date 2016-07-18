@@ -4,9 +4,9 @@ import json
 import time
 import pifacerelayplus
 
-import pulses from pulses
-import relays from relays
-import sensors from sensors
+from pulses import pulses
+from relays import relays
+from sensors import sensors
 
 pfr = pifacerelayplus.PiFaceRelayPlus(pifacerelayplus.RELAY)
 
