@@ -56,6 +56,9 @@ class relay:
 
         dev = int(relay) // 8
         relayId = int(relay) - (8 * dev)
+
+        print "GET dev: " + str(dev) + ", relayId: " + str(relayId)
+
         output = "{ \"id\": \"" + str(relay) + "\", \"state\": \"" + str(server.pfrs[dev].relays[relayId].value) + "\" }"
 
         return output
@@ -69,6 +72,7 @@ class relay:
         dev = int(relay) // 8
         relayId = int(relay) - (8 * dev)
 
+        print "POST dev: " + str(dev) + ", relayId: " + str(relayId)
         server.pfrs[dev].relays[relayId].value = int(i.value)
 
         return 200
