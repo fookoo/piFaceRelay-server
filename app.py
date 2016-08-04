@@ -3,7 +3,11 @@
 import web
 
 from pulses import pulses
+from pulses import pulse
+
 from relays import relays
+from relays import relay
+
 from sensors import sensors
 
 urls = (
