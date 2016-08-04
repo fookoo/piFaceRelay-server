@@ -3,8 +3,6 @@ import json
 import time
 import pifacerelayplus
 
-pfr = pifacerelayplus.PiFaceRelayPlus(pifacerelayplus.RELAY)
-
 class relays:
     def GET(self):
         web.header('Content-Type','application/json; charset=utf-8')
@@ -12,8 +10,15 @@ class relays:
         web.header('Access-Control-Allow-Credentials', 'true')
         output = "["
 
-        for i in range(0,8):
-            output += "{ \"id\": \"" + str(i) + "\", \"state\": \"" + str(pfr.relays[int(i)].value) + "\" },"
+        for i in range(0,relaysCount):
+            dev = i // 8
+            relayId = i;
+            if relayId >= 8:
+                relayId = i - 8
+
+            print "dev: " + str(dev) + " , relay: " + str(relayId) + "\n"
+
+            output += "{ \"id\": \"" + str(i) + "\", \"state\": \"" + str(pfrs[dev].relays[int(relayId)].value) + "\" },"
 
         return output[:-1] + "]"
 
@@ -24,13 +29,16 @@ class relays:
         values = json.loads(web.data())
 
         for item in values:
-                if item['type'] == 'switch':
-                    pfr.relays[int(item['id'])].value = int(item['state'])
-                elif item['type'] == 'pulse':
-                    if int(item['state']) == 1:
-                        pfr.relays[int(item['id'])].value = 1
-                        time.sleep(.1);
-                        pfr.relays[int(item['id'])].value = 0
+            dev = int(item['id']) // 8
+            relayId = int(item['id']) - (8 * dev)
+
+            if item['type'] == 'switch':
+                pfrs[dev].relays[relayId].value = int(item['state'])
+            elif item['type'] == 'pulse':
+                if int(item['state']) == 1:
+                    pfrs[dev].relays[relayId].value = 1
+                    time.sleep(.1);
+                    pfrs[dev].relays[relayId].value = 0
 
         return 200
 
@@ -56,7 +64,11 @@ class relay:
         web.header('Access-Control-Allow-Credentials', 'true')
 
         i = web.input()
-        pfr.relays[int(relay)].value = int(i.value)
+
+        dev = int(relay) // 8
+        relayId = int(relay) - (8 * dev)
+
+        pfrs[dev].relays[relayId].value = int(i.value)
 
         return 200
 
