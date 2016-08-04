@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 relaysCount = 12
 devicesCount = 2
 pfrs = []
