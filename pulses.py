@@ -41,7 +41,7 @@ class pulse:
         i = web.input()
 
         dev = int(relay) // 8
-        relayId = int(relay) - (8 * dev)
+        relayId = int(relay) - (8 * dev) - 1
 
         server.pfrs[dev].relays[relayId].value = 1
         time.sleep(.1);
