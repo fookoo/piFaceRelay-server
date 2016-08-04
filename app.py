@@ -12,9 +12,9 @@ from sensors import sensors
 
 urls = (
     '/pulses', 'pulses',
-    '/pulse/(\d)', 'pulse',
+    '/pulse/(\d+)', 'pulse',
     '/relays', 'relays',
-    '/relay/(\d)', 'relay',
+    '/relay/(\d+)', 'relay',
     '/sensors', 'sensors'
 )
 
