@@ -12,7 +12,7 @@ class relays:
 
         for i in range(0, server.relaysCount):
             dev = i // 8
-            relayId = i - (8 * dev) - 1
+            relayId = i - (8 * dev)
             output += "{ \"id\": \"" + str(i) + "\", \"state\": \"" + str(server.pfrs[dev].relays[int(relayId)].value) + "\" },"
 
         return output[:-1] + "]"
