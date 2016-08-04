@@ -53,7 +53,7 @@ class relay:
         web.header('Access-Control-Allow-Credentials', 'true')
 
         dev = int(relay) // 8
-        relayId = int(relay) - (8 * dev) - 1
+        relayId = int(relay) - (8 * dev)
 
         print "GET dev: " + str(dev) + ", relayId: " + str(relayId)
 
@@ -68,7 +68,7 @@ class relay:
         i = web.input()
 
         dev = int(relay) // 8
-        relayId = int(relay) - (8 * dev) - 1
+        relayId = int(relay) - (8 * dev)
 
         print "POST dev: " + str(dev) + ", relayId: " + str(relayId)
         server.pfrs[dev].relays[relayId].value = int(i.value)
