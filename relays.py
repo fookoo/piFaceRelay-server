@@ -1,7 +1,7 @@
 import web
 import json
 import time
-import pifacerelayplus
+import server
 
 class relays:
     def GET(self):
@@ -10,15 +10,12 @@ class relays:
         web.header('Access-Control-Allow-Credentials', 'true')
         output = "["
 
-        for i in range(0,relaysCount):
+        for i in range(0, server.relaysCount):
             dev = i // 8
             relayId = i;
             if relayId >= 8:
                 relayId = i - 8
-
-            print "dev: " + str(dev) + " , relay: " + str(relayId) + "\n"
-
-            output += "{ \"id\": \"" + str(i) + "\", \"state\": \"" + str(pfrs[dev].relays[int(relayId)].value) + "\" },"
+            output += "{ \"id\": \"" + str(i) + "\", \"state\": \"" + str(server.pfrs[dev].relays[int(relayId)].value) + "\" },"
 
         return output[:-1] + "]"
 
@@ -33,12 +30,12 @@ class relays:
             relayId = int(item['id']) - (8 * dev)
 
             if item['type'] == 'switch':
-                pfrs[dev].relays[relayId].value = int(item['state'])
+                server.pfrs[dev].relays[relayId].value = int(item['state'])
             elif item['type'] == 'pulse':
                 if int(item['state']) == 1:
-                    pfrs[dev].relays[relayId].value = 1
+                    server.pfrs[dev].relays[relayId].value = 1
                     time.sleep(.1);
-                    pfrs[dev].relays[relayId].value = 0
+                    server.pfrs[dev].relays[relayId].value = 0
 
         return 200
 
@@ -52,10 +49,14 @@ class relays:
 
 class relay:
     def GET(self, relay):
-        output = "{ \"id\": \"" + str(relay) + "\", \"state\": \"" + str(pfr.relays[int(relay)].value) + "\" }"
+
         web.header('Content-Type','application/json; charset=utf-8')
         web.header('Access-Control-Allow-Origin','*')
         web.header('Access-Control-Allow-Credentials', 'true')
+
+        dev = int(relay) // 8
+        relayId = int(relay) - (8 * dev)
+        output = "{ \"id\": \"" + str(relay) + "\", \"state\": \"" + str(server.pfrs[dev].relays[relayId].value) + "\" }"
 
         return output
 
@@ -68,7 +69,7 @@ class relay:
         dev = int(relay) // 8
         relayId = int(relay) - (8 * dev)
 
-        pfrs[dev].relays[relayId].value = int(i.value)
+        server.pfrs[dev].relays[relayId].value = int(i.value)
 
         return 200
 

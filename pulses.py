@@ -1,6 +1,8 @@
 import web
 import json
 import time
+import pifacerelayplus
+import server
 
 class pulses:
     def POST(self):
@@ -13,7 +15,7 @@ class pulses:
             dev = int(item['id']) // 8
             relayId = int(item['id']) - (8 * dev)
 
-            pfrs[dev].relays[relayId].value = 1;
+            server.pfrs[dev].relays[relayId].value = 1;
 
         time.sleep(.1);
 
@@ -21,7 +23,7 @@ class pulses:
             dev = int(item['id']) // 8
             relayId = int(item['id']) - (8 * dev)
 
-            pfrs[dev].relays[relayId].value = 0;
+            server.pfrs[dev].relays[relayId].value = 0;
 
         return 200
 
@@ -42,9 +44,9 @@ class pulse:
         dev = int(relay) // 8
         relayId = int(relay) - (8 * dev)
 
-        pfrs[dev].relays[relayId].value = 1
+        server.pfrs[dev].relays[relayId].value = 1
         time.sleep(.1);
-        pfrs[dev].relays[relayId].value = 0
+        server.pfrs[dev].relays[relayId].value = 0
 
         return 200
 
