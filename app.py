@@ -8,9 +8,9 @@ from sensors import sensors
 
 urls = (
     '/pulses', 'pulses',
-    '/pulse/([0-63])', 'pulse',
+    '/pulse/(\d)', 'pulse',
     '/relays', 'relays',
-    '/relay/([0-63])', 'relay',
+    '/relay/(\d)', 'relay',
     '/sensors', 'sensors'
 )
 
