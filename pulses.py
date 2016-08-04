@@ -1,7 +1,6 @@
 import web
 import json
 import time
-import pifacerelayplus
 import server
 
 class pulses:
